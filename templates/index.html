@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+
+    <title>NAPLES Input</title>
+</head>
+<body>
+    <h2>Enter Input Values</h2>
+    <form method="post" id="performanceForm" autocomplete="off">
+        <label for="numAthletes">Number of Athletes:</label>
+        <input type="number" name="numAthletes" id="numAthletes" required>
+
+        <label for="lowerLimit">Starting Interval Lower Limit:</label>
+        <input type="number" name="lowerLimit" step="0.01" required>
+
+        <label for="numIntervals">Number of Intervals:</label>
+        <input type="number" name="numIntervals" id="numIntervals" required>
+
+        <div id="athletePerformanceInputs">
+            <!-- Athlete performance input fields will be dynamically added here -->
+        </div>
+
+        <button type="submit">Calculate Statistics</button>
+    </form>
+
+    <script>
+        // Function to dynamically generate athlete performance input fields
+        function generateAthletePerformanceFields() {
+            var numAthletes = document.getElementById('numAthletes').value;
+            var athleteInputsContainer = document.getElementById('athletePerformanceInputs');
+            athleteInputsContainer.innerHTML = ''; // Clear previous inputs
+    
+            for (var i = 1; i <= numAthletes; i++) {
+                var label = document.createElement('label');
+                label.setAttribute('for', 'athlete' + i + 'Performances');
+                label.textContent = 'Athlete ' + i + ' Performances (Space-separated):';
+    
+                var input = document.createElement('input');
+                input.setAttribute('type', 'text');
+                input.setAttribute('name', 'athlete' + i + 'Performances');
+                input.setAttribute('required', 'true');
+    
+                // Append the label and input
+                athleteInputsContainer.appendChild(label);
+                athleteInputsContainer.appendChild(input);
+    
+                // Add a line break after each input
+                athleteInputsContainer.appendChild(document.createElement('br'));
+            }
+        }
+    
+        // Attach the function to the change event of the numAthletes input
+        document.getElementById('numAthletes').addEventListener('change', generateAthletePerformanceFields);
+    
+        // Initial generation of input fields
+        generateAthletePerformanceFields();
+    
+        // Clear the form when returning to index.html
+        function clearForm() {
+            document.getElementById('performanceForm').reset();
+        }
+    
+        // Call the clearForm function when the page is loaded
+        window.onload = clearForm;
+    </script>
+    
+</body>
+</html>
